@@ -10,7 +10,7 @@ A Flask starter project with server-side setup, including:
 ## Features
 - **Role-Based Access Control**:
 
-Admin: Full control over blog posts and user management.
+Admin: Full control over blog posts and user role management.
 Author: Can manage only their own blog posts.
 Reader: Can view all published blog posts and like/dislike them.
 - **Authentication**:
