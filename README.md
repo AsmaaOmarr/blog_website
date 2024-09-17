@@ -7,6 +7,25 @@ A Flask starter project with server-side setup, including:
 - **Flask-Injector**: For dependency injection
 - **Flask-Bootstrap**: For serving bootstrap features
 
+## Features
+- **Role-Based Access Control**:
+
+Admin: Full control over blog posts and user management.
+Author: Can manage only their own blog posts.
+Reader: Can view all published blog posts and like/dislike them.
+- **Authentication**:
+
+Session-based authentication for login and registration.
+Role assignment on registration, with Admin-only role modification.
+- **Database**:
+
+SQL Database: Managed using SQLAlchemy.
+
+- **Blog Management**:
+
+Create, view, edit, and delete posts based on user roles.
+Like/dislike functionality for blog posts.
+
 
 ## Establish the app
 
