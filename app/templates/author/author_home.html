@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block page_title %} Posts {% endblock %}
+
+{% block container %}
+    <div class="d-flex flex-row justify-content-between mb-4">
+        <h1>Posts</h1>
+        <a class="btn btn-secondary mt-auto mb-auto" href="{{ url_for('posts.create') }}">
+            Create New Post
+        </a>
+    </div>
+
+    {% if posts %}
+        <div class="list-group">
+            {% for post in posts %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5 class="mb-1">{{ post.title }}</h5>
+                        <div>
+                            <a class="btn btn-primary btn-sm me-2" href="{{ url_for('posts.edit', id=post.id) }}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="#" onclick="deletePost({{ post.id }})">Delete</a>
+                        </div>
+                    </div>
+                    <p class="mb-1">{{ post.content }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="bi bi-heart" style="color: red;"></i> {{ post.likes }}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <span>No posts available. :(</span>
+    {% endif %}
+
+    <script>
+        function deletePost(postId) {
+            fetch(`{{ url_for('posts.delete', id='') }}${postId}`, {
+                method: 'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "{{ url_for('posts.list_all') }}";
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
+    </script>
+{% endblock %}
+

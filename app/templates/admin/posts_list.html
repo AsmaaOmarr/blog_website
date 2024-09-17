@@ -1,0 +1,61 @@
+{% extends "admin_layout.html" %}
+{% block page_title %} posts {% endblock %}
+
+{% block container %}
+    <div class="d-flex flex-row justify-content-between">
+        <h1>Posts</h1>
+    </div>
+
+    {% if posts %}
+        <table class="table table-hover table-light mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">title</th>
+                    <th scope="col">content</th>
+                    <th scope="col">author</th>
+                    <th scope="col">likes</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.content }}</td>
+                        <td>{{ post.author.username }}</td>
+                        <td>{{ post.likes }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('posts.edit', id=post.id) }}" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger" onclick="deletePost({{ post.id }})">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <span>
+            No posts available. :(
+        </span>
+    {% endif %}
+    <script>
+        function deletePost(postId) {
+            fetch(`{{ url_for('posts.delete', id='') }}${postId}`, {
+                method: 'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "{{ url_for('admin.list_all_posts') }}";
+                }
+            }).catch(error => {
+                console.error('Network error:', error);
+            });
+        }
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "bootstrap/base.html" %}
+
+{% block html_attribs %} lang="en"{% endblock %}
+
+{% block title %}
+  {% block page_title %}{% endblock %} | Flask Starter Structure
+{% endblock %}
+
+{% block metas %}
+{{super()}}
+
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico">
+{% endblock %}
+
+{% block styles %}
+    {{super()}}
+
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+{% endblock %}
+
+{% block content %}
+<div class="app container mt-5">
+    {% block container %}
+    {% endblock %}
+</div>
+{% endblock %}

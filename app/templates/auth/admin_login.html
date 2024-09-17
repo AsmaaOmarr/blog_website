@@ -1,0 +1,18 @@
+{% extends "layoutwithoutnavbar.html" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_title %} admin login {% endblock %}
+
+{% block container %}
+    <form action="{{ url_for('auth.admin_login') }}" method="POST" class="form" role="form">
+        {{ form.hidden_tag() }}
+
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.password) }}
+
+        {{ wtf.form_errors(form, hiddens="only") }}
+
+        <button type="submit" class="btn btn-secondary mr-5">Login</button>
+    </form>
+{% endblock %}

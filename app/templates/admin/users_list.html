@@ -1,0 +1,45 @@
+{% extends "admin_layout.html" %}
+{% block page_title %} Users {% endblock %}
+
+{% block container %}
+    <div class="d-flex flex-row justify-content-between">
+        <h1>Users</h1>
+    </div>
+
+    {% if users %}
+        <table class="table table-hover table-light mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <form action="{{ url_for('admin.update_role', id=user.id) }}" method="post">
+                                <select name="role" class="form-select" onchange="this.form.submit()">
+                                    <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>admin</option>
+                                    <option value="author" {% if user.role == 'author' %}selected{% endif %}>author</option>
+                                    <option value="reader" {% if user.role == 'reader' %}selected{% endif %}>reader</option>
+                                </select>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <span>No Users available. :(</span>
+    {% endif %}
+{% endblock %}
