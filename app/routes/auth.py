@@ -43,7 +43,7 @@ def signup(user_service: UserService):
                 signup_form.password.data
             )
 
-        return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login"))
 
     return render_template("/auth/signup.html", form=signup_form)
 
