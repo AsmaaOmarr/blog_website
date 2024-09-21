@@ -4,7 +4,6 @@ from app.services.user import UserService
 from flask_login import login_required
 from app.forms.auth.login_form import LoginForm
 from app.forms.auth.signup_form import SignupForm
-
 from flask import Blueprint
 from app import db
 import uuid

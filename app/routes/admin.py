@@ -3,6 +3,7 @@ from flask_injector import inject
 from flask_login import login_required,fresh_login_required
 from app.services.user import UserService
 from app.services.posts import PostService
+from app.decorators import role_required
 
 
 admin = Blueprint("admin", __name__)
@@ -11,18 +12,21 @@ admin = Blueprint("admin", __name__)
 @admin.route("/admin_home")
 @login_required
 @fresh_login_required
+@role_required(['admin'])
 def admin_home():
     return render_template("/admin/home.html")
 
 @admin.route("/users")
 @inject
 @fresh_login_required
+@role_required(['admin'])
 def list_all_users(user_service: UserService):
     return render_template("admin/users_list.html", users=user_service.get_all())
 
 @admin.route("/posts")
 @inject
 @fresh_login_required
+@role_required(['admin'])
 def list_all_posts(post_service: PostService):
     return render_template("admin/posts_list.html", posts=post_service.get_all())
 
@@ -30,6 +34,7 @@ def list_all_posts(post_service: PostService):
 @admin.route("/update_role/<int:id>", methods=["POST"])
 @fresh_login_required
 @inject
+@role_required(['admin'])
 def update_role(id: int, user_service: UserService):
     user = user_service.get_by_id(id)
     if user:

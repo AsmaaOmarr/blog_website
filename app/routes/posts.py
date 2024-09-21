@@ -4,6 +4,7 @@ from app.services.posts import PostService
 from app.forms.posts.create_post import CreateForm
 from app.forms.posts.edit_post import EditForm
 from flask_login import current_user
+from app.decorators import role_required
 
 
 posts = Blueprint("posts", __name__)
@@ -18,6 +19,7 @@ def list_all(post_service: PostService):
 
 
 @posts.route("/create")
+@role_required(['author'])
 def create():
     return render_template("/posts/create.html", form=CreateForm())
 
@@ -49,6 +51,7 @@ def view(post_service: PostService, id):
 
 @posts.route("/<id>/edit")
 @inject
+@role_required(['author','admin'])
 def edit(post_service: PostService, id):
     post = post_service.get_by_id(id)
 
@@ -87,6 +90,7 @@ def update(post_service: PostService, id):
 
 @posts.route("/<id>", methods=["DELETE"])
 @inject
+@role_required(['author','admin'])
 def delete(post_service: PostService, id):
     post = post_service.get_by_id(id)
     if post:
@@ -96,6 +100,7 @@ def delete(post_service: PostService, id):
 
 @posts.route("/like/<post_id>", methods=["POST"])
 @inject
+@role_required('reader')
 def toggle_like(post_service: PostService, post_id):
     if not current_user.is_authenticated:
         return jsonify({"error": "User not authenticated"}), 401
